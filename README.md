@@ -18,13 +18,12 @@
 - `src/layouts` — shell/layout for route groups (e.g. `HomeShell/DefaultShell`)
 - `src/assets` — icons/images
 
-## Getting Started
-
-### Requirements
-- Node.js (LTS recommended)
-- `npm / pnpm / yarn`
-
 ### Install
 ```bash
 npm install
+```
+
+### Getting Started
+```
+npm run dev
 ```
