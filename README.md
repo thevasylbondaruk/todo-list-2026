@@ -1,16 +1,32 @@
-# React + Vite
+# A simple SPA application for task management: creating, editing, and organizing tasks by status.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features
+- Viewing the task list
+- Adding a task
+- Editing a task by `id`
+- Filtering by status (Todo / Done / Deleted)
+- Page routing (Home / Add / Edit)
 
-Currently, two official plugins are available:
+## Tech Stack
+- React
+- React Router
+- CSS / SCSS
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Project Structure (high level)
+- `src/pages` — pages (Home / Add / Edit)
+- `src/components` — reusable components (Topbar, Footer, UI)
+- `src/layouts` — shell/layout for route groups (e.g. HomeShell/DefaultShell)
+- `src/assets` — icons/images
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Requirements
+- Node.js (LTS recommended)
+- npm / pnpm / yarn
 
-## Expanding the ESLint configuration
+### Install
+```bash
+npm install
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Translated with DeepL.com (free version)
+```
