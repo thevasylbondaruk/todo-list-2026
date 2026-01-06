@@ -1,0 +1,50 @@
+.topbar {
+	height: 70px;
+	background: #222;
+	position: relative;
+}
+
+.logo-badge {
+	position: absolute;
+	left: 50%;
+	bottom: -42px;
+	transform: translateX(-50%);
+	width: 85px;
+	height: 85px;
+	display: grid;
+	place-items: center;
+}
+
+.logo-badge__logo {
+	z-index: 1;
+	position: relative;
+	width: 70px;
+	height: 70px;
+	animation: logo-spin 4s linear infinite;
+}
+
+.logo-badge-slow__spin {
+	width: 80px;
+	height: 80px;
+	position: absolute;
+	animation: spin 3s linear infinite;
+}
+
+.logo-badge-fast__spin {
+	width: 85px;
+	height: 85px;
+	position: absolute;
+	animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(-360deg);
+	}
+}
+
+@keyframes logo-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}

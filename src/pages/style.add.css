@@ -1,0 +1,58 @@
+.btn__clean {
+	height: 34px;
+	padding: 0 14px;
+	border-radius: 999px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	text-decoration: none;
+	font-size: 14px;
+	line-height: 1;
+	font-weight: 500;
+
+	color: #a00000;
+	background: #ffffff;
+	border-color: rgba(0, 0, 0, 0.12);
+
+	border: 1px solid transparent;
+	cursor: pointer;
+	user-select: none;
+
+	transition: background-color 150ms ease, border-color 150ms ease,
+		color 150ms ease, box-shadow 150ms ease, transform 120ms ease;
+}
+
+.btn__clean:hover {
+	background: rgba(161, 134, 134, 0.06);
+	border-color: rgba(0, 0, 0, 0.12);
+	color: #cc0000;
+}
+
+.btn__clean:active {
+	background: rgba(0, 0, 0, 0.09);
+	transform: translateY(1px);
+}
+
+.btn__icon-сlean {
+	fill: #a00000;
+	width: 22px;
+	height: 22px;
+	display: block;
+}
+
+.btn__icon-сlean:hover {
+	fill: #cc0000;
+}
+.btn__icon-сlean:active {
+	fill: #fc0000;
+}
+
+.logo-badge--top {
+	position: relative;
+}
+
+.add__todo-content {
+	display: flex;
+	justify-content: space-around;
+}
