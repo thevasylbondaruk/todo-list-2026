@@ -27,6 +27,4 @@
 ### Install
 ```bash
 npm install
-
-Translated with DeepL.com (free version)
 ```
