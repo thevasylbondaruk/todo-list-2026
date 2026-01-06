@@ -1,3 +1,5 @@
+import './EditTaskPage.css';
+
 export default function EditTaskPage() {
 	return (
 		<div>

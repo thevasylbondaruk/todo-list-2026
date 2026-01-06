@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import Clean from '../assets/clean.svg?react';
-import './style.add.css';
+import Clean from '../../assets/clean.svg?react';
+import './AddTaskPage.css';
 
 export default function AddTaskPage() {
 	return (
