@@ -3,6 +3,7 @@
 	width: 100%;
 	display: grid;
 	grid-template-rows: auto 1fr auto;
+	background-color: #f4f4f4;
 }
 
 .footer-zone {
@@ -43,4 +44,24 @@
 	background: #1cbcf1;
 	transform: translateY(1px);
 	box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 700px) {
+	.bottombar__fab {
+		width: 60px;
+		height: 60px;
+		font-size: 42px;
+	}
+
+	.bottombar__fab-wrap {
+		transform: translate(-50%, -45%);
+	}
+}
+
+@media (max-width: 520px) {
+	.bottombar__fab {
+		width: 52px;
+		height: 52px;
+		font-size: 36px;
+	}
 }
