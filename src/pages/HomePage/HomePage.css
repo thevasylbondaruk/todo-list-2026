@@ -1,25 +1,18 @@
 /* верхняя полоса */
 
 .todo {
-	padding: 56px 16px 86px;
-	background-color: #f4f4f4;
-
+	padding: 66px 16px 86px;
 	max-width: 1440px;
 	width: 100%;
 	margin-inline: auto;
 }
 
-/* “8 Todos” и “View all” */
+/* “Todos” и “View all” */
 .todo__head {
 	display: grid;
 	grid-template-columns: 1fr 200px 100px;
 	gap: 12px;
 	margin-top: 8px;
-}
-
-.todo__link {
-	color: #19a9d8;
-	font-weight: 600;
 }
 
 /* пунктирная линия */
@@ -32,7 +25,7 @@
 /* заголовок таблицы */
 .todo__table {
 	display: grid;
-	grid-template-columns: 34px 110px 1fr;
+	grid-template-columns: 34px 100px 100px 140px 1fr;
 	gap: 12px;
 	background: #c6c5c5;
 	border-radius: 10px;
@@ -47,7 +40,7 @@
 
 .table__row {
 	display: grid;
-	grid-template-columns: 34px 110px 1fr 32px 32px;
+	grid-template-columns: 34px 100px 100px 140px 1fr 32px 32px;
 	gap: 12px;
 	align-items: center;
 	background: #e1e1e1;
@@ -55,19 +48,39 @@
 	border-radius: 10px;
 	padding: 12px 14px;
 	margin-top: 12px;
+	transition: color 160ms ease, opacity 160ms ease;
 }
 
 .todo__task {
+	margin: 0;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	background-image: linear-gradient(currentColor, currentColor);
+	background-size: 0 2px;
+	background-position: 0 60%;
+	background-repeat: no-repeat;
+	transition: background-size 180ms ease;
 }
 
-/* .todo__checkbox {
-	cursor: pointer;
-	height: 16px;
-	width: 16px;
-} */
+.todo__data {
+	margin: 0;
+	background-image: linear-gradient(currentColor, currentColor);
+	background-size: 0 2px;
+	background-position: 0 60%;
+	background-repeat: no-repeat;
+	transition: background-size 180ms ease;
+}
+
+.table__row--done {
+	color: #6b7280;
+	opacity: 0.85;
+}
+
+.table__row--done .todo__task,
+.table__row--done .todo__data {
+	background-size: 100% 2px;
+}
 
 .btn__icon {
 	width: 32px;
@@ -353,4 +366,89 @@ Search
 .todo__count {
 	display: flex;
 	align-items: flex-end;
+}
+
+@media (max-width: 1100px) {
+	.todo__table {
+		grid-template-columns: 34px 90px 90px 130px 1fr;
+	}
+
+	.table__row {
+		grid-template-columns: 34px 90px 90px 130px 1fr 30px 30px;
+	}
+}
+
+@media (max-width: 900px) {
+	.todo__head {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.todo__count {
+		grid-column: 1 / -1;
+	}
+
+	.search,
+	.select {
+		width: 100%;
+	}
+}
+
+@media (max-width: 700px) {
+	.todo {
+		padding: 56px 12px 76px;
+	}
+
+	.todo__head {
+		grid-template-columns: 1fr;
+		gap: 10px;
+	}
+
+	.todo__table {
+		grid-template-columns: 24px 80px 80px 1fr;
+		gap: 8px;
+		padding: 10px 12px;
+		font-size: 13px;
+	}
+
+	.table__row {
+		grid-template-columns: 24px 80px 80px 1fr 28px 28px;
+		gap: 8px;
+		padding: 10px 12px;
+	}
+
+	.todo__task,
+	.todo__data {
+		white-space: normal;
+	}
+
+	.todo__table > :nth-child(5),
+	.table__row > :nth-child(5) {
+		display: none;
+	}
+
+	.btn__icon {
+		width: 28px;
+		height: 28px;
+	}
+
+	.btn__icon-edit,
+	.btn__icon-delete {
+		width: 18px;
+		height: 18px;
+	}
+}
+
+@media (max-width: 520px) {
+	.todo__table {
+		grid-template-columns: 24px 90px 1fr;
+	}
+
+	.table__row {
+		grid-template-columns: 24px 90px 1fr 26px 26px;
+	}
+
+	.todo__table > :nth-child(3),
+	.table__row > :nth-child(3) {
+		display: none;
+	}
 }
