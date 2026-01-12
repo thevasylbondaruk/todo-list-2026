@@ -1,0 +1,104 @@
+.topbar {
+	height: 70px;
+	background: #222;
+	position: relative;
+}
+
+.logo-badge {
+	position: absolute;
+	left: 50%;
+	bottom: -42px;
+	transform: translateX(-50%);
+	width: 85px;
+	height: 85px;
+	display: grid;
+	place-items: center;
+}
+
+.logo-badge__logo {
+	z-index: 1;
+	position: relative;
+	width: 70px;
+	height: 70px;
+	animation: logo-spin 4s linear infinite;
+}
+
+.logo-badge-slow__spin {
+	width: 80px;
+	height: 80px;
+	position: absolute;
+	animation: spin 3s linear infinite;
+}
+
+.logo-badge-fast__spin {
+	width: 85px;
+	height: 85px;
+	position: absolute;
+	animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(-360deg);
+	}
+}
+
+@keyframes logo-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media (max-width: 700px) {
+	.topbar {
+		height: 60px;
+	}
+
+	.logo-badge {
+		width: 70px;
+		height: 70px;
+		bottom: -34px;
+	}
+
+	.logo-badge__logo {
+		width: 58px;
+		height: 58px;
+	}
+
+	.logo-badge-slow__spin {
+		width: 66px;
+		height: 66px;
+	}
+
+	.logo-badge-fast__spin {
+		width: 70px;
+		height: 70px;
+	}
+}
+
+@media (max-width: 520px) {
+	.topbar {
+		height: 56px;
+	}
+
+	.logo-badge {
+		width: 64px;
+		height: 64px;
+		bottom: -30px;
+	}
+
+	.logo-badge__logo {
+		width: 52px;
+		height: 52px;
+	}
+
+	.logo-badge-slow__spin {
+		width: 60px;
+		height: 60px;
+	}
+
+	.logo-badge-fast__spin {
+		width: 64px;
+		height: 64px;
+	}
+}
