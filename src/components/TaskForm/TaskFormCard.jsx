@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { paths } from '../../app/router/paths';
 import Clean from '../../assets/clean.svg?react';
@@ -15,8 +15,6 @@ export function TaskFormCard({
 	dateProps,
 	wiggle,
 }) {
-	const navigate = useNavigate();
-
 	return (
 		<main className="page">
 			<section className="card" aria-labelledby="task-form-heading">
@@ -24,12 +22,9 @@ export function TaskFormCard({
 					<h1 className="card__title" id="task-form-heading">
 						{heading}
 					</h1>
-					<button
-						onClick={() => navigate(paths.home)}
-						className="btn__cancel-top"
-					>
+					<Link to={paths.home} className="btn__cancel-top">
 						Cancel
-					</button>
+					</Link>
 				</header>
 
 				<form className="form" onSubmit={onSubmit}>

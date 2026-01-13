@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 
 import { DefaultShell, HomeShell } from '../../layouts';
-import { HomePage, AddTaskPage, EditTaskPage } from '../../pages';
+import { HomePage, AddTaskPage, EditTaskPage, NotFoundPage } from '../../pages';
 
 import { paths } from './paths';
 
@@ -17,5 +17,5 @@ export const router = createBrowserRouter([
 			{ path: paths.edit(), element: <EditTaskPage /> },
 		],
 	},
-	{ path: '*', element: <HomePage /> },
+	{ path: '*', element: <NotFoundPage /> },
 ]);
