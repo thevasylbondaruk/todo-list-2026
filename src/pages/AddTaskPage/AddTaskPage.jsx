@@ -1,11 +1,19 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { paths } from '../../app/router/paths';
 import {
 	TaskFormCard,
 	useFormCleaner,
 	useTaskFormState,
 } from '../../components';
-import { createTaskId, saveTask } from '../../shared/storage/tasksStorage';
+import { createTask as repoCreateTask } from '../../repositories/tasksRepository';
+import { createTaskId } from '../../shared/storage/tasksStorage';
 
 export default function AddTaskPage() {
+	const navigate = useNavigate();
+	const [error, setError] = useState(null);
+
 	const {
 		title,
 		description,
@@ -17,49 +25,68 @@ export default function AddTaskPage() {
 		resetFields,
 		handleDateBlur,
 		getPayload,
-	} = useTaskFormState();
+	} = useTaskFormState({
+		title: '',
+		description: '',
+		endDate: '',
+	});
 
 	const { wiggle, handleClean, handleWiggleEnd } = useFormCleaner(resetFields);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setError(null);
+
 		const payload = getPayload();
 		if (!payload) return;
 
-		saveTask({
+		// ВАЖНО: задаём id сами (uuid), чтобы edit/:id работал стабильно
+		const draft = {
 			id: createTaskId(),
-			...payload,
-			createdAt: new Date().toISOString(),
+			createdAt: Date.now(),
 			status: 'todo',
-		});
-		resetFields();
+			...payload, // title, description, endDate
+		};
+
+		try {
+			await repoCreateTask(draft);
+			navigate(paths.home);
+		} catch (e) {
+			setError(e);
+		}
 	};
 
 	return (
-		<TaskFormCard
-			heading="Add task"
-			onSubmit={handleSubmit}
-			titleProps={{
-				placeholder: 'Enter task title',
-				value: title,
-				onChange: (e) => setTitle(e.target.value),
-			}}
-			descriptionProps={{
-				placeholder: 'Enter task description',
-				value: description,
-				onChange: (e) => setDescription(e.target.value),
-			}}
-			dateProps={{
-				min: minDate,
-				max: '9999-12-31',
-				value: endDate,
-				onChange: (e) => setEndDate(e.target.value),
-				onBlur: handleDateBlur,
-			}}
-			button="Add"
-			wiggle={wiggle}
-			onClick={handleClean}
-			onAnimationEnd={handleWiggleEnd}
-		/>
+		<>
+			{error ? (
+				<p role="alert" style={{ padding: '8px 0' }}>
+					Failed to create task (API may be unavailable).
+				</p>
+			) : null}
+
+			<TaskFormCard
+				heading="Add task"
+				onSubmit={handleSubmit}
+				titleProps={{
+					value: title,
+					onChange: (e) => setTitle(e.target.value),
+				}}
+				descriptionProps={{
+					value: description,
+					onChange: (e) => setDescription(e.target.value),
+				}}
+				dateProps={{
+					min: minDate,
+					max: '9999-12-31',
+					value: endDate,
+					onChange: (e) => setEndDate(e.target.value),
+					onBlur: handleDateBlur,
+				}}
+				button="Add"
+				wiggle={wiggle}
+				onClick={handleClean}
+				onAnimationEnd={handleWiggleEnd}
+			/>
+		</>
 	);
 }

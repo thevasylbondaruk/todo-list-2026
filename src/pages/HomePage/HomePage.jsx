@@ -1,23 +1,54 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { paths } from '../../app/router/paths';
 import EditIcon from '../../assets/edit.svg?react';
 import DeleteIcon from '../../assets/trash-basket.svg?react';
-import { formatShortDate } from '../../utils/data';
+// без пробела в пути + алиасы, чтобы не путаться
 import {
-	loadTasks,
-	normalizeTask,
-	saveTasks,
-} from '../../shared/storage/tasksStorage';
+	getCachedTasks,
+	syncTasks,
+	updateTask as repoUpdateTask,
+	deleteTask as repoDeleteTask,
+} from '../../repositories/tasksRepository';
+import { formatShortDate } from '../../utils/data';
 
 import './HomePage.css';
 
 export default function HomePage() {
-	const [tasks, setTasks] = useState(() => loadTasks());
+	// 1) мгновенно отрисуем кэш
+	const [tasks, setTasks] = useState(() => getCachedTasks());
+
+	// 2) состояния для синхронизации
+	const [loading, setLoading] = useState(tasks.length === 0);
+	const [error, setError] = useState(null);
+
 	const [query, setQuery] = useState('');
 	const [filter, setFilter] = useState('all');
 
+	// 3) при маунте: подтянуть свежие с сервера (если сервер есть)
+	useEffect(() => {
+		let ignore = false;
+
+		(async () => {
+			try {
+				setError(null);
+				const fresh = await syncTasks(); // revalidate
+				if (!ignore) setTasks(fresh);
+			} catch (e) {
+				// если API нет — вы останетесь на кэше, просто будет error
+				if (!ignore) setError(e);
+			} finally {
+				if (!ignore) setLoading(false);
+			}
+		})();
+
+		return () => {
+			ignore = true;
+		};
+	}, []);
+
+	// ====== ваши вычисления UI (как было) ======
 	const counts = tasks.reduce(
 		(acc, task) => {
 			acc.all += 1;
@@ -59,44 +90,96 @@ export default function HomePage() {
 		visibleToggleableTasks.map((task) => task.id)
 	);
 
-	const updateTasks = (updater) => {
-		setTasks((prev) => {
-			const next = updater(prev).map(normalizeTask);
-			saveTasks(next);
-			return next;
-		});
+	// ====== handlers через репозиторий ======
+
+	// helper: если сеть упала — пробуем восстановиться синком
+	const revalidateAfterError = async (e) => {
+		setError(e);
+		try {
+			const fresh = await syncTasks();
+			setTasks(fresh);
+		} catch {
+			// оставляем кэш как есть
+		}
 	};
 
-	const handleToggleDone = (taskId) => {
-		updateTasks((prev) =>
-			prev.map((task) => {
-				if (task.id !== taskId) return task;
-				return {
-					...task,
-					status: task.status === 'done' ? 'todo' : 'done',
-				};
-			})
+	const handleToggleDone = async (taskId) => {
+		const current = tasks.find((t) => t.id === taskId);
+		if (!current || current.status === 'deleted') return;
+
+		const nextStatus = current.status === 'done' ? 'todo' : 'done';
+
+		// оптимистично в UI
+		setTasks((prev) =>
+			prev.map((t) => (t.id === taskId ? { ...t, status: nextStatus } : t))
 		);
+
+		try {
+			const updated = await repoUpdateTask(taskId, { status: nextStatus });
+			// привести UI к тому, что вернул сервер
+			setTasks((prev) => prev.map((t) => (t.id === taskId ? updated : t)));
+		} catch (e) {
+			await revalidateAfterError(e);
+		}
 	};
 
-	const handleDelete = (taskId) => {
-		updateTasks((prev) =>
-			prev.flatMap((task) => {
-				if (task.id !== taskId) return [task];
-				if (task.status === 'deleted') return [];
-				return [{ ...task, status: 'deleted' }];
-			})
+	// мягкое удаление: 1 клик -> status deleted
+	// если уже deleted -> реально DELETE
+	const handleDelete = async (taskId) => {
+		const current = tasks.find((t) => t.id === taskId);
+		if (!current) return;
+
+		// 2-й клик по deleted — физически удаляем
+		if (current.status === 'deleted') {
+			// оптимистично убрать из UI
+			setTasks((prev) => prev.filter((t) => t.id !== taskId));
+
+			try {
+				await repoDeleteTask(taskId);
+			} catch (e) {
+				await revalidateAfterError(e);
+			}
+			return;
+		}
+
+		// 1-й клик — пометить deleted
+		setTasks((prev) =>
+			prev.map((t) => (t.id === taskId ? { ...t, status: 'deleted' } : t))
 		);
+
+		try {
+			const updated = await repoUpdateTask(taskId, { status: 'deleted' });
+			setTasks((prev) => prev.map((t) => (t.id === taskId ? updated : t)));
+		} catch (e) {
+			await revalidateAfterError(e);
+		}
 	};
 
-	const handleToggleAll = (checked) => {
+	const handleToggleAll = async (checked) => {
 		if (toggleAllDisabled) return;
-		updateTasks((prev) =>
-			prev.map((task) => {
-				if (!visibleToggleableIds.has(task.id)) return task;
-				return { ...task, status: checked ? 'done' : 'todo' };
+
+		const nextStatus = checked ? 'done' : 'todo';
+		const ids = [...visibleToggleableIds];
+
+		// оптимистично
+		setTasks((prev) =>
+			prev.map((t) => {
+				if (!visibleToggleableIds.has(t.id)) return t;
+				if (t.status === 'deleted') return t;
+				return { ...t, status: nextStatus };
 			})
 		);
+
+		try {
+			// чтобы не писать сложную “склейку” результатов — после пачки просто синхронизируем
+			await Promise.all(
+				ids.map((id) => repoUpdateTask(id, { status: nextStatus }))
+			);
+			const fresh = await syncTasks();
+			setTasks(fresh);
+		} catch (e) {
+			await revalidateAfterError(e);
+		}
 	};
 
 	return (
@@ -116,6 +199,7 @@ export default function HomePage() {
 						onChange={(e) => setQuery(e.target.value)}
 					/>
 				</div>
+
 				<div className="select">
 					<select
 						className="select__field"
@@ -130,7 +214,17 @@ export default function HomePage() {
 					</select>
 				</div>
 			</div>
+
+			{/* (опционально) вывод состояния синка */}
+			{loading ? <p style={{ padding: '8px 0' }}>Loading…</p> : null}
+			{error ? (
+				<p role="alert" style={{ padding: '8px 0' }}>
+					Sync error (API may be unavailable). Showing cached data.
+				</p>
+			) : null}
+
 			<hr className="todo__divider" />
+
 			<div className="todo__table">
 				<label className="checkbox">
 					<input
@@ -147,6 +241,7 @@ export default function HomePage() {
 				<p className="todo__task">Title</p>
 				<p className="todo__task">Description</p>
 			</div>
+
 			<ul className="table__list">
 				{visibleTasks.length === 0 ? (
 					<li className="table__row table__row--column">
@@ -170,10 +265,12 @@ export default function HomePage() {
 								/>
 								<span aria-hidden="true" />
 							</label>
+
 							<p className="todo__data">{formatShortDate(task.createdAt)}</p>
 							<p className="todo__data">{formatShortDate(task.endDate)}</p>
 							<p className="todo__task">{task.title}</p>
 							<p className="todo__task">{task.description}</p>
+
 							{task.status !== 'deleted' ? (
 								<Link
 									to={paths.edit(task.id)}
@@ -185,6 +282,7 @@ export default function HomePage() {
 							) : (
 								<span aria-hidden="true" />
 							)}
+
 							<button
 								type="button"
 								className="btn__icon"

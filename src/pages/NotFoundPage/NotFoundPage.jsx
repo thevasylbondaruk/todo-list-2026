@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 
 import { paths } from '../../app/router/paths';
+import ErrorPage from '../../assets/404-illustration.svg';
+import './NotFoundPage.css';
 
 export default function NotFoundPage() {
 	return (
@@ -10,15 +12,10 @@ export default function NotFoundPage() {
 				<p className="status__text">
 					The page you are looking for doesn’t exist or has been moved.
 				</p>
-
-				<div className="status__actions">
-					<Link to={paths.home} className="btn btn--primary">
-						Go to Home
-					</Link>
-					<Link to={paths.add} className="btn btn--ghost">
-						Add task
-					</Link>
-				</div>
+				<img src={ErrorPage} alt="404 error" />
+				<Link to={paths.home} className="status__btn status__btn--primary">
+					Go to Home
+				</Link>
 			</section>
 		</main>
 	);

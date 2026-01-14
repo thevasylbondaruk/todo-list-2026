@@ -122,6 +122,7 @@ textarea.field__control {
 	font-size: 22px;
 	color: #fff;
 	cursor: pointer;
+	font-weight: 500;
 	transition: transform 120ms ease, box-shadow 150ms ease, filter 150ms ease;
 }
 

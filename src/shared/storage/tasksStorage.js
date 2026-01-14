@@ -1,4 +1,55 @@
 const STORAGE_KEY = 'tasks';
+const META_KEY = 'tasks.meta';
+
+export function loadMeta() {
+	try {
+		const raw = localStorage.getItem(META_KEY);
+		return raw ? JSON.parse(raw) : { fetchedAt: 0 };
+	} catch {
+		return { fetchedAt: 0 };
+	}
+}
+
+export function saveMeta(patch) {
+	const prev = loadMeta();
+	localStorage.setItem(META_KEY, JSON.stringify({ ...prev, ...patch }));
+}
+
+export function isCacheStale(ttlMs) {
+	const { fetchedAt } = loadMeta();
+	return !fetchedAt || Date.now() - fetchedAt > ttlMs;
+}
+
+export function markFetchedNow() {
+	saveMeta({ fetchedAt: Date.now() });
+}
+
+//
+
+export function upsertTask(task) {
+	const normalized = normalizeTask(task);
+	const tasks = loadTasks();
+	const idx = tasks.findIndex((t) => t.id === normalized.id);
+
+	let next;
+	if (idx === -1) {
+		next = [normalized, ...tasks];
+	} else {
+		next = tasks.map((t, i) => (i === idx ? { ...t, ...normalized } : t));
+	}
+
+	saveTasks(next);
+	return next;
+}
+
+export function removeTask(id) {
+	const tasks = loadTasks();
+	const next = tasks.filter((t) => t.id !== id);
+	saveTasks(next);
+	return next;
+}
+
+//
 
 export function normalizeTask(task) {
 	return { ...task, status: task.status ?? 'todo' };
