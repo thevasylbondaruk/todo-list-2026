@@ -1,0 +1,40 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+}
+
+img,
+svg,
+video,
+canvas {
+	display: block;
+	max-width: 100%;
+}
+
+img {
+	height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+ul,
+ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}

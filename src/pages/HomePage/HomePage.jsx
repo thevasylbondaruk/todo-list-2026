@@ -184,6 +184,14 @@ export default function HomePage() {
 
 	return (
 		<main className="todo">
+			{/* (опционально) вывод состояния синка */}
+			{loading ? <p style={{ padding: '8px 0' }}>Loading…</p> : null}
+			{error ? (
+				<p role="alert" style={{ padding: '8px 0' }}>
+					Sync error (API may be unavailable). Showing cached data.
+				</p>
+			) : null}
+
 			<div className="todo__head">
 				<div className="todo__count">{taskCountLabel}</div>
 
@@ -214,14 +222,6 @@ export default function HomePage() {
 					</select>
 				</div>
 			</div>
-
-			{/* (опционально) вывод состояния синка */}
-			{loading ? <p style={{ padding: '8px 0' }}>Loading…</p> : null}
-			{error ? (
-				<p role="alert" style={{ padding: '8px 0' }}>
-					Sync error (API may be unavailable). Showing cached data.
-				</p>
-			) : null}
 
 			<hr className="todo__divider" />
 

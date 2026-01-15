@@ -1,0 +1,15 @@
+#root {
+	min-height: 100dvh;
+	display: flex;
+	flex-direction: column;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+button {
+	cursor: pointer;
+	user-select: none;
+}

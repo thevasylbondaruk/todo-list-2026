@@ -1,0 +1,19 @@
+:root {
+	/* Shadows */
+	--shadow-search: 0 8px 18px rgba(15, 23, 42, 0.08);
+	--shadow-search-hover: 0 10px 22px rgba(15, 23, 42, 0.1);
+
+	--shadow-card: 0 12px 40px rgba(0, 0, 0, 0.08);
+
+	// --shadow-fab: 0 10px 22px rgba(0, 0, 0, 0.3);
+	// --shadow-fab-hover: 0 8px 18px rgba(0, 0, 0, 0.25);
+	// --shadow-fab-active: 0 6px 14px rgba(0, 0, 0, 0.2);
+
+	--shadow-danger: 0 8px 18px rgba(250, 0, 0, 0.1);
+	--shadow-danger-hover: 0 10px 20px rgba(250, 0, 0, 0.14);
+	--shadow-danger-active: 0 12px 22px rgba(250, 0, 0, 0.18);
+
+	--shadow-primary: 0 8px 18px rgba(25, 175, 225, 0.22);
+	--shadow-primary-hover: 0 10px 22px rgba(25, 175, 225, 0.28);
+	--shadow-primary-active: 0 6px 14px rgba(25, 175, 225, 0.26);
+}

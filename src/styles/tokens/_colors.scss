@@ -1,0 +1,55 @@
+:root {
+	/* Brand / Primary */
+	--color-primary: #19afe1; /* основной */
+	--color-primary-2: #19a9d8; /* альтернативный (select / fab) */
+	--color-primary-hover: #1ab5e9;
+	--color-primary-active: #1bbcf1;
+
+	/* Text */
+	--color-text: #0f172a; /* текст в search input */
+	--color-text-2: #444; /* текст строк таблицы */
+	--color-text-muted: #6b7280; /* done */
+	--color-placeholder: rgba(15, 23, 42, 0.45);
+
+	/* Surfaces / Backgrounds */
+	--color-surface: #ffffff; /* карточки, поля, checkbox box */
+	--color-topbar: #222; /* верхняя полоса */
+	--color-bottombar: #e6e6e6;
+
+	/* Table */
+	--color-table-head-bg: #c6c5c5;
+	--color-table-row-bg: #e1e1e1;
+	--color-divider: #cfcfcf;
+
+	/* Borders / UI neutrals */
+	--color-border: #cbd5e1; /* select/checkbox border */
+	--color-border-hover: #94a3b8;
+	--color-icon-stroke: #64748b; /* стрелка select */
+
+	/* Focus */
+	--color-focus: #19afe1;
+	--color-focus-soft: rgba(25, 175, 225, 0.35);
+	--color-focus-ring: rgba(25, 175, 225, 0.25);
+	--color-focus-within-ring: rgba(25, 175, 225, 0.1);
+
+	/* Checkbox (blue) */
+	--color-checkbox: #2563eb;
+	--color-checkbox-ring: rgba(37, 99, 235, 0.35);
+
+	/* Status / actions */
+	--color-success: #00ae40;
+	--color-success-hover: #00c649;
+	--color-success-active: #00d04c;
+
+	--color-danger: #dd0000;
+	--color-danger-hover: #ed0101;
+	--color-danger-active: #ff0000;
+
+	--color-danger-2: #ff0b0b; /* cancel/clean красный */
+	--color-danger-soft: rgba(255, 11, 11, 0.08);
+	--color-danger-border: rgba(255, 11, 11, 0.45);
+	--color-danger-border-hover: rgba(255, 11, 11, 0.65);
+
+	/* Gradients */
+	--gradient-search-bg: linear-gradient(180deg, #ffffff 0%, #f7fdff 100%);
+}
