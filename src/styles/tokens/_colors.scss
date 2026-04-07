@@ -1,7 +1,7 @@
 :root {
-	/* Brand / Primary */
+	/* Brand / Primary (у тебя встречаются 2 близких оттенка) */
 	--color-primary: #19afe1; /* основной */
-	--color-primary-2: #19a9d8; /* альтернативный (select / fab) */
+	--color-primary-2: #19a9d8; /* альтернативный (в select / fab) */
 	--color-primary-hover: #1ab5e9;
 	--color-primary-active: #1bbcf1;
 
@@ -49,6 +49,19 @@
 	--color-danger-soft: rgba(255, 11, 11, 0.08);
 	--color-danger-border: rgba(255, 11, 11, 0.45);
 	--color-danger-border-hover: rgba(255, 11, 11, 0.65);
+
+	/* Shadows */
+	--shadow-search: 0 8px 18px rgba(15, 23, 42, 0.08);
+	--shadow-search-hover: 0 10px 22px rgba(15, 23, 42, 0.1);
+
+	--shadow-card: 0 12px 40px rgba(0, 0, 0, 0.08);
+	--shadow-fab: 0 10px 22px rgba(0, 0, 0, 0.3);
+	--shadow-fab-hover: 0 8px 18px rgba(0, 0, 0, 0.25);
+	--shadow-fab-active: 0 6px 14px rgba(0, 0, 0, 0.2);
+
+	--shadow-danger: 0 8px 18px rgba(250, 0, 0, 0.1);
+	--shadow-danger-hover: 0 10px 20px rgba(250, 0, 0, 0.14);
+	--shadow-danger-active: 0 12px 22px rgba(250, 0, 0, 0.18);
 
 	/* Gradients */
 	--gradient-search-bg: linear-gradient(180deg, #ffffff 0%, #f7fdff 100%);

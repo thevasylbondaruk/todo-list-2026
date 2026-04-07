@@ -1,0 +1,46 @@
+html[data-theme='dark'] {
+	--accent: #19a9d8;
+	--accent-2: #22c1f2;
+
+	--bg: #0b1020;
+	--surface: #0f172a;
+	--text: #e5e7eb;
+	--muted: #9aa4b2;
+	--line: rgba(148, 163, 184, 0.18);
+
+	--header-bg: #070b12;
+	--footer-bg: #0b1220;
+
+	--shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
+	--shadow-soft: 0 8px 22px rgba(0, 0, 0, 0.35);
+
+	--field-bg: rgba(255, 255, 255, 0.04);
+	--field-line: rgba(34, 193, 242, 0.55);
+	--field-placeholder: rgba(154, 164, 178, 0.75);
+
+	--danger: #f87171;
+
+	//* HEADER
+
+	//* FOOTER
+
+	/* base */
+	--fab-icon-bg: #2bc7f6;
+	--fab-icon-bg-shadow: #137d9f;
+	--fab-icon-fg: #f4fbff;
+	--fab-icon-fg-shadow: #bfe8f7;
+
+	/* hover  */
+	--fab-icon-bg-hover: #3fcdf7;
+	--fab-icon-bg-shadow-hover: #188db2;
+	--fab-icon-fg-hover: #f4fbff;
+	--fab-icon-fg-shadow-hover: #bfe8f7;
+
+	/* btn shadow */
+	--fab-shadow: 0 10px 22px rgba(0, 0, 0, 0.38), 0 2px 6px rgba(0, 0, 0, 0.22);
+	--fab-shadow-hover:
+		0 14px 28px rgba(0, 0, 0, 0.44), 0 4px 10px rgba(0, 0, 0, 0.26);
+	--fab-shadow-active:
+		0 8px 18px rgba(0, 0, 0, 0.34), 0 2px 6px rgba(0, 0, 0, 0.2);
+	--fab-focus-ring: 0 0 0 3px rgba(0, 173, 225, 0.596);
+}

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { paths } from '../../app/router/paths';
 import EditIcon from '../../assets/edit.svg?react';
 import DeleteIcon from '../../assets/trash-basket.svg?react';
-// без пробела в пути + алиасы, чтобы не путаться
 import {
 	getCachedTasks,
 	syncTasks,
@@ -13,20 +12,17 @@ import {
 } from '../../repositories/tasksRepository';
 import { formatShortDate } from '../../utils/data';
 
-import './HomePage.css';
+import s from './HomePage.module.scss';
 
 export default function HomePage() {
-	// 1) мгновенно отрисуем кэш
 	const [tasks, setTasks] = useState(() => getCachedTasks());
 
-	// 2) состояния для синхронизации
 	const [loading, setLoading] = useState(tasks.length === 0);
 	const [error, setError] = useState(null);
 
 	const [query, setQuery] = useState('');
 	const [filter, setFilter] = useState('all');
 
-	// 3) при маунте: подтянуть свежие с сервера (если сервер есть)
 	useEffect(() => {
 		let ignore = false;
 
@@ -36,7 +32,6 @@ export default function HomePage() {
 				const fresh = await syncTasks(); // revalidate
 				if (!ignore) setTasks(fresh);
 			} catch (e) {
-				// если API нет — вы останетесь на кэше, просто будет error
 				if (!ignore) setError(e);
 			} finally {
 				if (!ignore) setLoading(false);
@@ -48,7 +43,6 @@ export default function HomePage() {
 		};
 	}, []);
 
-	// ====== ваши вычисления UI (как было) ======
 	const counts = tasks.reduce(
 		(acc, task) => {
 			acc.all += 1;
@@ -57,7 +51,7 @@ export default function HomePage() {
 			else acc.todo += 1;
 			return acc;
 		},
-		{ all: 0, todo: 0, done: 0, deleted: 0 }
+		{ all: 0, todo: 0, done: 0, deleted: 0 },
 	);
 
 	const formatTodo = (value) => `${value} Todo${value === 1 ? '' : 's'}`;
@@ -77,7 +71,7 @@ export default function HomePage() {
 	});
 
 	const visibleToggleableTasks = visibleTasks.filter(
-		(task) => task.status !== 'deleted'
+		(task) => task.status !== 'deleted',
 	);
 
 	const allVisibleDone =
@@ -87,19 +81,16 @@ export default function HomePage() {
 	const toggleAllDisabled = visibleToggleableTasks.length === 0;
 
 	const visibleToggleableIds = new Set(
-		visibleToggleableTasks.map((task) => task.id)
+		visibleToggleableTasks.map((task) => task.id),
 	);
 
-	// ====== handlers через репозиторий ======
-
-	// helper: если сеть упала — пробуем восстановиться синком
 	const revalidateAfterError = async (e) => {
 		setError(e);
 		try {
 			const fresh = await syncTasks();
 			setTasks(fresh);
 		} catch {
-			// оставляем кэш как есть
+			//
 		}
 	};
 
@@ -109,29 +100,23 @@ export default function HomePage() {
 
 		const nextStatus = current.status === 'done' ? 'todo' : 'done';
 
-		// оптимистично в UI
 		setTasks((prev) =>
-			prev.map((t) => (t.id === taskId ? { ...t, status: nextStatus } : t))
+			prev.map((t) => (t.id === taskId ? { ...t, status: nextStatus } : t)),
 		);
 
 		try {
 			const updated = await repoUpdateTask(taskId, { status: nextStatus });
-			// привести UI к тому, что вернул сервер
 			setTasks((prev) => prev.map((t) => (t.id === taskId ? updated : t)));
 		} catch (e) {
 			await revalidateAfterError(e);
 		}
 	};
 
-	// мягкое удаление: 1 клик -> status deleted
-	// если уже deleted -> реально DELETE
 	const handleDelete = async (taskId) => {
 		const current = tasks.find((t) => t.id === taskId);
 		if (!current) return;
 
-		// 2-й клик по deleted — физически удаляем
 		if (current.status === 'deleted') {
-			// оптимистично убрать из UI
 			setTasks((prev) => prev.filter((t) => t.id !== taskId));
 
 			try {
@@ -142,9 +127,8 @@ export default function HomePage() {
 			return;
 		}
 
-		// 1-й клик — пометить deleted
 		setTasks((prev) =>
-			prev.map((t) => (t.id === taskId ? { ...t, status: 'deleted' } : t))
+			prev.map((t) => (t.id === taskId ? { ...t, status: 'deleted' } : t)),
 		);
 
 		try {
@@ -161,19 +145,17 @@ export default function HomePage() {
 		const nextStatus = checked ? 'done' : 'todo';
 		const ids = [...visibleToggleableIds];
 
-		// оптимистично
 		setTasks((prev) =>
 			prev.map((t) => {
 				if (!visibleToggleableIds.has(t.id)) return t;
 				if (t.status === 'deleted') return t;
 				return { ...t, status: nextStatus };
-			})
+			}),
 		);
 
 		try {
-			// чтобы не писать сложную “склейку” результатов — после пачки просто синхронизируем
 			await Promise.all(
-				ids.map((id) => repoUpdateTask(id, { status: nextStatus }))
+				ids.map((id) => repoUpdateTask(id, { status: nextStatus })),
 			);
 			const fresh = await syncTasks();
 			setTasks(fresh);
@@ -183,8 +165,7 @@ export default function HomePage() {
 	};
 
 	return (
-		<main className="todo">
-			{/* (опционально) вывод состояния синка */}
+		<>
 			{loading ? <p style={{ padding: '8px 0' }}>Loading…</p> : null}
 			{error ? (
 				<p role="alert" style={{ padding: '8px 0' }}>
@@ -192,14 +173,14 @@ export default function HomePage() {
 				</p>
 			) : null}
 
-			<div className="todo__head">
-				<div className="todo__count">{taskCountLabel}</div>
+			<div className={s.todoHead}>
+				<div className={s.todoCount}>{taskCountLabel}</div>
 
-				<div className="search">
-					<span className="search__icon" aria-hidden="true" />
+				<div className={s.search}>
+					<span className={s.searchIcon} aria-hidden="true" />
 
 					<input
-						className="search__field"
+						className={s.searchField}
 						type="search"
 						placeholder="Type to Search"
 						aria-label="Search"
@@ -208,9 +189,9 @@ export default function HomePage() {
 					/>
 				</div>
 
-				<div className="select">
+				<div className={s.select}>
 					<select
-						className="select__field"
+						className={s.selectField}
 						aria-label="Filter todos"
 						value={filter}
 						onChange={(e) => setFilter(e.target.value)}
@@ -223,10 +204,10 @@ export default function HomePage() {
 				</div>
 			</div>
 
-			<hr className="todo__divider" />
+			<hr className={s.todoDivider} />
 
-			<div className="todo__table">
-				<label className="checkbox">
+			<div className={s.todoTable}>
+				<label className={s.checkbox}>
 					<input
 						type="checkbox"
 						aria-label="Toggle all"
@@ -236,26 +217,26 @@ export default function HomePage() {
 					/>
 					<span aria-hidden="true" />
 				</label>
-				<p className="todo__data">Date</p>
-				<p className="todo__data">Date End</p>
-				<p className="todo__task">Title</p>
-				<p className="todo__task">Description</p>
+				<p className={s.todoData}>Date</p>
+				<p className={s.todoData}>Date End</p>
+				<p className={s.todoTask}>Title</p>
+				<p className={s.todoTask}>Description</p>
 			</div>
 
-			<ul className="table__list">
+			<ul className={s.tableList}>
 				{visibleTasks.length === 0 ? (
-					<li className="table__row table__row--column">
-						<p className="todo__task">No tasks yet.</p>
+					<li className={s.tableRowNoTasks}>
+						<p>No tasks yet.</p>
 					</li>
 				) : (
 					visibleTasks.map((task) => (
 						<li
 							key={task.id}
-							className={`table__row ${
-								task.status === 'done' ? 'table__row--done' : ''
+							className={`${s.tableRow} ${
+								task.status === 'done' ? s.tableRowDone : ''
 							}`}
 						>
-							<label className="checkbox">
+							<label className={s.checkbox}>
 								<input
 									type="checkbox"
 									aria-label="Checkbox"
@@ -266,18 +247,18 @@ export default function HomePage() {
 								<span aria-hidden="true" />
 							</label>
 
-							<p className="todo__data">{formatShortDate(task.createdAt)}</p>
-							<p className="todo__data">{formatShortDate(task.endDate)}</p>
-							<p className="todo__task">{task.title}</p>
-							<p className="todo__task">{task.description}</p>
+							<p className={s.paragraph}>{formatShortDate(task.createdAt)}</p>
+							<p className={s.paragraph}>{formatShortDate(task.endDate)}</p>
+							<p className={s.paragraph}>{task.title}</p>
+							<p className={s.paragraph}>{task.description}</p>
 
 							{task.status !== 'deleted' ? (
 								<Link
 									to={paths.edit(task.id)}
-									className="btn__icon"
+									className={s.iconBtn}
 									aria-label="Edit"
 								>
-									<EditIcon className="btn__icon-edit" />
+									<EditIcon className={s.iconBtnEditIcon} />
 								</Link>
 							) : (
 								<span aria-hidden="true" />
@@ -285,16 +266,16 @@ export default function HomePage() {
 
 							<button
 								type="button"
-								className="btn__icon"
+								className={s.iconBtn}
 								aria-label="Delete"
 								onClick={() => handleDelete(task.id)}
 							>
-								<DeleteIcon className="btn__icon-delete" />
+								<DeleteIcon className={s.iconBtnDeleteIcon} />
 							</button>
 						</li>
 					))
 				)}
 			</ul>
-		</main>
+		</>
 	);
 }

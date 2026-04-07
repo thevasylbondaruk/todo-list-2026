@@ -1,9 +1,17 @@
-import './Footer.css';
+import { Link } from 'react-router-dom';
 
-export function Footer({ children }) {
+import ButtonFooter from '../../assets/plus-button.svg?react';
+
+import s from './Footer.module.scss';
+
+export function Footer({ footerLink }) {
 	return (
-		<footer className="bottombar" aria-label="Footer">
-			{children}
-		</footer>
+		<div className={s.bottombarFabWrap}>
+			{footerLink ? (
+				<Link to={footerLink.to} aria-label="Add task" className={s.fabLink}>
+					<ButtonFooter className={s.bottombarFab} />
+				</Link>
+			) : null}
+		</div>
 	);
 }

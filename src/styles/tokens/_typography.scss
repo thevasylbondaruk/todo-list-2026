@@ -1,5 +1,6 @@
 :root {
-	--font-sans: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, Arial,
+	--font-sans:
+		'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, Arial,
 		sans-serif;
 
 	/* weights */
@@ -11,6 +12,7 @@
 	/* line-heights */
 	--lh-base: 1.5;
 	--lh-tight: 1.2;
+	--lh-tight-one: 1;
 
 	/* component-ish */
 	--control-line-34: 2.125rem; /* select line-height 34 px*/
@@ -22,8 +24,14 @@
 	--fz-16: 1rem; /* 16px */
 	--fz-18: 1.125rem; /* 18px */
 	--fz-22: 1.375rem; /* 22px */
+	--fz-24: 1.5rem; /* 24px */
 	--fz-28: 1.75rem; /* 28px */
 	--fz-34: 2.125rem; /* 34px */
+	--fz-38: 2.375rem; /* 38px */
+	--fz-44: 2.75rem; /* 44px */
+	--fz-48: 3rem; /* 48px */
+	--fz-50: 3.125rem; /* 50px */
+	--fz-54: 3.375rem; /* 54px */
 
 	/* Spacing */
 	--space-1: 0.25rem; /* 4px */
@@ -35,6 +43,8 @@
 	--space-8: 2rem; /* 32px */
 	--space-10: 2.5rem; /* 40px */
 	--space-12: 3rem; /* 48px */
+	--space-13: 0.875rem; /* 14px */
+	--space-14: 0.625rem; /* 10px */
 
 	/* Radius */
 	--radius-sm: 0.625rem; /* 10px */

@@ -1,0 +1,37 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+<svg height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 484.8 484.8" xml:space="preserve" fill="#000000">
+
+<g id="SVGRepo_bgCarrier" stroke-width="0"/>
+
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+
+<g id="SVGRepo_iconCarrier">
+  <circle fill="var(--icon-bg)" cx="242.4" cy="242.4" r="242.4"/>
+  <path fill="var(--icon-bg-shadow)" d="M0,242.4C0,376,108,484,242.4,484C376,484,484,376,484,242.4"/>
+
+  <!-- CLIP: rounded plus shape (same rounding everywhere) -->
+  <defs>
+    <clipPath id="plusClip">
+      <!-- vertical bar (thinner + shorter) -->
+      <rect x="218.4" y="102.4" width="48" height="280" rx="18" ry="18"/>
+      <!-- horizontal bar (thinner + shorter) -->
+      <rect x="102.4" y="218.4" width="280" height="48" rx="18" ry="18"/>
+    </clipPath>
+  </defs>
+
+  <!-- PLUS main (rounded + thinner + shorter) -->
+  <rect fill="var(--icon-fg)" x="218.4" y="102.4" width="48" height="280" rx="18" ry="18"/>
+  <rect fill="var(--icon-fg)" x="102.4" y="218.4" width="280" height="48" rx="18" ry="18"/>
+
+  <!-- PLUS shadow (clipped to rounded plus so edges match perfectly) -->
+  <polygon
+    fill="var(--icon-fg-shadow)"
+    clip-path="url(#plusClip)"
+    points="270.4,212.8 212.8,270.4 214.4,270.4 214.4,382.4 270.4,382.4 270.4,270.4 382.4,270.4 382.4,214.4 270.4,214.4 "
+  />
+</g>
+
+</svg>
+

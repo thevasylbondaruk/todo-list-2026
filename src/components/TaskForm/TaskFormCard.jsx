@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 
 import { paths } from '../../app/router/paths';
 import Clean from '../../assets/clean.svg?react';
-import './TaskForm.css';
+
+import s from './TaskForm.module.scss';
 
 export function TaskFormCard({
 	heading,
@@ -16,24 +17,24 @@ export function TaskFormCard({
 	wiggle,
 }) {
 	return (
-		<main className="page">
-			<section className="card" aria-labelledby="task-form-heading">
-				<header className="card__header">
-					<h1 className="card__title" id="task-form-heading">
+		<div className={s.pageCenter}>
+			<section className={s.card} aria-labelledby="task-form-heading">
+				<header className={s.cardHeader}>
+					<h1 className={s.cardTitle} id="task-form-heading">
 						{heading}
 					</h1>
-					<Link to={paths.home} className="btn__cancel-top">
+					<Link to={paths.home} className={s.btnCancelTop}>
 						Cancel
 					</Link>
 				</header>
 
-				<form className="form" onSubmit={onSubmit}>
-					<div className="field">
-						<label className="field__label" htmlFor="task-title">
+				<form className={s.form} onSubmit={onSubmit}>
+					<div className={s.field}>
+						<label className={s.fieldLabel} htmlFor="task-title">
 							Title
 						</label>
 						<input
-							className="field__control"
+							className={s.fieldControl}
 							name="title"
 							type="text"
 							placeholder="Enter task title"
@@ -45,12 +46,12 @@ export function TaskFormCard({
 							id="task-title"
 						/>
 					</div>
-					<div className="field">
-						<label className="field__label" htmlFor="task-desc">
+					<div className={s.field}>
+						<label className={s.fieldLabel} htmlFor="task-desc">
 							Description
 						</label>
 						<textarea
-							className="field__control"
+							className={s.fieldControl}
 							name="description"
 							placeholder="Enter task description"
 							rows="3"
@@ -61,12 +62,12 @@ export function TaskFormCard({
 							id="task-desc"
 						/>
 					</div>
-					<div className="field">
-						<label className="field__label" htmlFor="task-end">
+					<div className={s.field}>
+						<label className={s.fieldLabel} htmlFor="task-end">
 							Date end
 						</label>
 						<input
-							className="field__control"
+							className={s.fieldControl}
 							name="endDate"
 							type="date"
 							max="9999-12-31"
@@ -76,22 +77,22 @@ export function TaskFormCard({
 						/>
 					</div>
 
-					<div className="actions" role="group" aria-label="Form actions">
-						<button className="btn btn--primary" type="submit">
+					<div className={s.actions} role="group" aria-label="Form actions">
+						<button className={`${s.btn} ${s.btnPrimary}`} type="submit">
 							{button}
 						</button>
 
 						<button
 							type="button"
-							className={`btn__clean ${wiggle ? 'is-wiggle' : ''}`}
+							className={`${s.btnClean} ${wiggle ? s.isWiggle : ''}`}
 							onClick={onClick}
 							onAnimationEnd={onAnimationEnd}
 						>
-							Clean <Clean className="btn__icon-clean" />
+							Clean <Clean className={s.btnIconClean} />
 						</button>
 					</div>
 				</form>
 			</section>
-		</main>
+		</div>
 	);
 }

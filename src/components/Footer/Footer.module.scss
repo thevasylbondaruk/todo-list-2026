@@ -1,0 +1,107 @@
+@use 'helpers' as *;
+
+.bottombarFabWrap {
+	position: absolute;
+	left: 50%;
+	top: 0;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+
+	pointer-events: none;
+}
+
+.fabLink {
+	width: 2.75rem;
+	height: 2.75rem;
+
+	min-inline-size: 44px;
+	min-block-size: 44px;
+
+	display: grid;
+	place-items: center;
+
+	border-radius: 50%;
+	text-decoration: none;
+
+	box-shadow: var(--fab-shadow);
+	pointer-events: auto;
+
+	-webkit-tap-highlight-color: transparent;
+
+	transition:
+		box-shadow 140ms ease,
+		transform 120ms ease,
+		filter 120ms ease;
+
+	--icon-bg: var(--fab-icon-bg);
+	--icon-bg-shadow: var(--fab-icon-bg-shadow);
+	--icon-fg: var(--fab-icon-fg);
+	--icon-fg-shadow: var(--fab-icon-fg-shadow);
+
+	&:active {
+		transform: translateY(1px);
+		filter: brightness(0.98) saturate(0.98);
+		box-shadow: var(--fab-shadow-active);
+	}
+
+	&:focus-visible {
+		outline: none;
+		box-shadow: var(--fab-shadow), var(--fab-focus-ring);
+	}
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.fabLink:hover {
+		--icon-bg: var(--fab-icon-bg-hover);
+		--icon-bg-shadow: var(--fab-icon-bg-shadow-hover);
+		box-shadow: var(--fab-shadow-hover);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.fabLink {
+		transition: none;
+	}
+}
+
+.bottombarFab {
+	inline-size: 100%;
+	block-size: 100%;
+	display: block;
+	pointer-events: none;
+}
+
+@include up(sm) {
+	.fabLink {
+		width: 3rem;
+		height: 3rem;
+	}
+}
+
+@include up(md) {
+	.fabLink {
+		width: 3.25rem;
+		height: 3.25rem;
+	}
+}
+
+@include up(lg) {
+	.fabLink {
+		width: 3.5rem;
+		height: 3.5rem;
+	}
+}
+
+@include up(xl) {
+	.fabLink {
+		width: 3.75rem;
+		height: 3.75rem;
+	}
+}
+
+@include up(xxl) {
+	.fabLink {
+		width: 4rem;
+		height: 4rem;
+	}
+}

@@ -7,13 +7,14 @@ import s from './NotFoundPage.module.scss';
 
 export default function NotFoundPage() {
 	return (
-		<main className={s.status}>
+		<div className={s.pageCenter}>
 			<section className={s.card}>
 				<h1 className={s.title}>404 — Page not found</h1>
 				<p className={s.text}>
 					The page you are looking for doesn’t exist or has been moved.
 				</p>
 				<img
+					className={s.illustration}
 					src={ErrorPage}
 					alt="Illustration of a 404 page"
 					aria-hidden="true"
@@ -22,6 +23,6 @@ export default function NotFoundPage() {
 					Go to Home
 				</Link>
 			</section>
-		</main>
+		</div>
 	);
 }

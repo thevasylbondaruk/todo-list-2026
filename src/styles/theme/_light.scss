@@ -1,0 +1,56 @@
+:root {
+	/* accent */
+	--accent: #19a9d8;
+	--accent-2: #18b3e6;
+
+	/* components */
+	--plus: #fff;
+
+	/* neutrals */
+	--bg: #f3f6fb;
+	--surface: #ffffff;
+	--text: #0f172a;
+	--muted: #64748b;
+	--line: rgba(15, 23, 42, 0.12);
+
+	/* shell */
+	--header-bg: #222f4e;
+	--footer-bg: #eef2f7;
+
+	/* inputs */
+	--field-bg: #ffffff;
+	--field-line: rgba(25, 169, 216, 0.55);
+	--field-placeholder: rgba(100, 116, 139, 0.8);
+
+	/* danger */
+	--danger: #ef4444;
+
+	/* shadows / radius */
+	--shadow: 0 10px 28px rgba(2, 8, 23, 0.12);
+	--shadow-soft: 0 6px 16px rgba(2, 8, 23, 0.1);
+
+	//* HEADER
+
+	//* FOOTER
+
+	/* base */
+	--fab-icon-bg: #19a9d8;
+	--fab-icon-bg-shadow: #0f7fa4;
+	--fab-icon-fg: #ffffff;
+	--fab-icon-fg-shadow: #d6f0fa;
+
+	/* hover */
+	--fab-icon-bg-hover: #22c1f2;
+	--fab-icon-bg-shadow-hover: #128fb6;
+	--fab-icon-fg-hover: #ffffff;
+	--fab-icon-fg-shadow-hover: #cff0fd;
+
+	/* btn shadow */
+	--fab-shadow:
+		0 12px 28px rgba(2, 8, 23, 0.14), 0 2px 6px rgba(2, 8, 23, 0.08);
+	--fab-shadow-hover:
+		0 18px 42px rgba(2, 8, 23, 0.18), 0 6px 14px rgba(2, 8, 23, 0.12);
+	--fab-shadow-active:
+		0 10px 24px rgba(2, 8, 23, 0.14), 0 2px 6px rgba(2, 8, 23, 0.1);
+	--fab-focus-ring: 0 0 0 3px rgba(19, 200, 255, 0.596);
+}

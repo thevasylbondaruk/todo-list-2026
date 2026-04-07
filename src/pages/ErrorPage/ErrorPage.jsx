@@ -2,6 +2,8 @@ import { isRouteErrorResponse, Link, useRouteError } from 'react-router-dom';
 
 import { paths } from '../../app/router/paths';
 
+import s from './ErrorPage.module.scss';
+
 export default function ErrorPage() {
 	const error = useRouteError();
 
@@ -16,7 +18,7 @@ export default function ErrorPage() {
 		message =
 			typeof error.data === 'string'
 				? error.data
-				: error.data?.message ?? message;
+				: (error.data?.message ?? message);
 	} else if (error instanceof Error) {
 		message = error.message || message;
 	}
@@ -26,21 +28,21 @@ export default function ErrorPage() {
 	};
 
 	return (
-		<main className="status">
-			<section className="status__card" role="alert" aria-live="assertive">
+		<main className={s.pageCenter}>
+			<section className={s.card} role="alert" aria-live="assertive">
 				<div className="status__code">{code}</div>
-				<h1 className="status__title">{title}</h1>
-				<p className="status__text">{message}</p>
+				<h1 className={s.title}>{title}</h1>
+				<p className={s.text}>{message}</p>
 
 				<div className="status__actions">
 					<button
 						type="button"
-						className="status__btn btn--primary"
+						className={`${s.btn} ${s.btnPrimary}`}
 						onClick={handleReload}
 					>
 						Reload
 					</button>
-					<Link to={paths.home} className="status__btn status__btn--primary">
+					<Link to={paths.home} className={`${s.btn} ${s.btnPrimary}`}>
 						Go to Home
 					</Link>
 				</div>
