@@ -62,12 +62,12 @@ Task fields used by the UI and API:
 
 ```json
 {
-  "id": "uuid",
-  "createdAt": 1710000000000,
-  "status": "todo | done | deleted",
-  "title": "string (3-15 chars)",
-  "description": "string (5-200 chars)",
-  "endDate": "YYYY-MM-DD"
+	"id": "uuid",
+	"createdAt": 1710000000000,
+	"status": "todo | done | deleted",
+	"title": "string (3-15 chars)",
+	"description": "string (5-200 chars)",
+	"endDate": "YYYY-MM-DD"
 }
 ```
 
@@ -90,5 +90,5 @@ Task fields used by the UI and API:
 ## Caching and Sync Notes
 
 - The app keeps a local cache in `localStorage` and uses it immediately on load.
-- A background sync refreshes data from the API.
+- A background sync refreshes data from the API..
 - Cache TTL is 60 seconds; you can change it in `src/repositories/tasksRepository.js`.
