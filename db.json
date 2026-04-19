@@ -1,14 +1,6 @@
 {
   "tasks": [
     {
-      "id": "f1991b06-ab24-4aeb-a394-b85f2d62dc11",
-      "createdAt": 1768993190944,
-      "status": "done",
-      "title": "lkmln",
-      "description": "lknklnl",
-      "endDate": "2026-01-30"
-    },
-    {
       "id": "b9676d11-9e27-49d2-a8b5-a7b18db0839c",
       "createdAt": 1769003587453,
       "status": "deleted",
